@@ -8,6 +8,11 @@ Things not defined
   Falls this is not found anywhere, dann Do something else 
   Falls all hell breaks loose, dann Do a third thing 
 
+Return on third
+  Falls this won't match, dann Return 1 
+  Falls this matches, dann Return 3 
+  Falls this won't match, dann Return 2
+
 Return on second
   Falls this won't match, dann Return 1 
   Falls this matches, dann Return 2 

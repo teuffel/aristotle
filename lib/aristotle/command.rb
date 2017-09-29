@@ -3,7 +3,7 @@ module Aristotle
     attr_reader :action, :condition, :action_proc, :condition_proc
 
     def initialize(line, conditions, actions)
-      @action, @condition = line.split(' if ', 2).map(&:strip)
+      @condition, @action = line.split(', dann ', 2).map(&:strip)
 
       raise 'Badly formatted line' if @action == '' || @condition == ''
 
