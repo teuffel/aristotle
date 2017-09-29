@@ -10,9 +10,9 @@ module Aristotle
             "<ul>"+
             commands.map do |command|
               "<li>"+
-                  format_fragment(command, :action, show_code: show_code)+
-                  " <strong style='color:blue'>IF</strong> "+
                   format_fragment(command, :condition, show_code: show_code)+
+                  ", <strong> dann</strong> "+
+                  format_fragment(command, :action, show_code: show_code)+
                   "</li>"
             end.join +
             "</ul>"
@@ -26,6 +26,7 @@ module Aristotle
 
       text = fragment.send(part).to_s
       text.gsub!(/'([^']+)'/, '<strong>\1</strong>')
+      text.gsub!(/'Falls'/, '<strong>\1</strong>')
 
       proc = fragment.send("#{part}_proc")
 
