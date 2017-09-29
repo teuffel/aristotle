@@ -6,16 +6,16 @@ module Aristotle
 
     def html_rules(show_code: true)
       @klass.commands.map do |command_title, commands|
-        "<strong>#{command_title}</strong>"+
+        "<div class='business-rule'><strong>#{command_title}</strong>"+
             "<ul>"+
             commands.map do |command|
               "<li>"+
-                  format_fragment(command, :action, show_code: show_code)+
-                  " <strong style='color:blue'>IF</strong> "+
                   format_fragment(command, :condition, show_code: show_code)+
+                  ", <span class='business-rule-action'> dann</span> "+
+                  format_fragment(command, :action, show_code: show_code)+
                   "</li>"
             end.join +
-            "</ul>"
+            "</ul></div>"
       end.join('<br>').html_safe
     end
 
@@ -25,7 +25,8 @@ module Aristotle
       return '' if part != :action && part != :condition
 
       text = fragment.send(part).to_s
-      text.gsub!(/'([^']+)'/, '<strong>\1</strong>')
+      text.gsub!(/'([^']+)'/, '<span class="business-rule-fact">\1</span>')
+      text.gsub!(/(Falls)/, '<span class="business-rule-condition">\1</span>')
 
       proc = fragment.send("#{part}_proc")
 
