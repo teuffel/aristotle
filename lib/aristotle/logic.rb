@@ -16,6 +16,10 @@ module Aristotle
       nil
     end
 
+    def self.custom_aristotles_logic_file(file)
+      @custom_aristotles_logic_file = file
+    end
+
     def self.commands(logic_method = nil)
       load_commands
       logic_method.nil? ? @commands : (@commands[logic_method] || [])
@@ -38,7 +42,13 @@ module Aristotle
 
       return if @commands != {}
 
-      filename = "app/logic/#{logic_name}.logic"
+      if @custom_aristotles_logic_file
+        file_path = "#{@custom_aristotles_logic_file}"
+      else
+        file_path = "app/logic/#{logic_name}"
+      end
+      filename = "#{file_path}.logic"
+
       logic_data = File.read(filename)
 
       command = nil

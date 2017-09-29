@@ -2,6 +2,8 @@ require 'minitest/autorun'
 require 'aristotle'
 
 class TestLogic < Aristotle::Logic
+  custom_aristotles_logic_file 'lib/other_logic_path/test'
+
   action /Go to a bar/ do |_|
     false
   end
@@ -42,9 +44,43 @@ class TestModel
   end
 end
 
+class TestModel2
+  attr_accessor :payload
+
+  def initialize(argument)
+    @payload = argument
+  end
+end
+
 class AristotleTest < Minitest::Test
   def test_aristotle
     test_model = TestModel.new('payload')
+    test_logic = TestLogic.new(test_model)
+
+    assert test_logic.is_a? Aristotle::Logic
+    assert_nil test_logic.process('Nothing matches')
+
+    begin
+      test_logic.process('Things not defined')
+      assert false, 'It should have thrown an exception here'
+    rescue
+      assert true, ''
+    end
+
+    assert_equal 3, test_logic.process('Return on third')
+    assert_equal 1, test_logic.process('Return only the first')
+
+    assert_equal 'payload', test_logic.process('Test payload')
+
+    assert_equal 'regexp', test_logic.process('Test condition regexp')
+
+    returned_command = test_logic.process('Test condition regexp', return_command: true)
+    assert returned_command.is_a?(Aristotle::Command)
+    assert_equal 'Return payload', returned_command.action
+    assert_equal 'this is a regexp condition', returned_command.condition
+  end
+  def test_aristotle_2
+    test_model = TestModel2.new('payload')
     test_logic = TestLogic.new(test_model)
 
     assert test_logic.is_a? Aristotle::Logic
