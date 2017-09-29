@@ -6,7 +6,7 @@ module Aristotle
 
     def html_rules(show_code: true)
       @klass.commands.map do |command_title, commands|
-        "<div class='business-rule'><h4>#{command_title}</h4>"+
+        "<div class='business-rule'><h6>#{command_title}</h6>"+
             "<ul>"+
             commands.map do |command|
               "<li>"+
