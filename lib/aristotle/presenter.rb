@@ -26,7 +26,7 @@ module Aristotle
 
       text = fragment.send(part).to_s
       text.gsub!(/'([^']+)'/, '<span class="business-rule-fact">\1</span>')
-      text.gsub!(/(Falls)/, '<span class="business-rule-condition">\1</span>')
+      text.gsub!(/Falls/) {|sym| "<span class='business-rule-condition'>#{sym}</span>" }
 
       proc = fragment.send("#{part}_proc")
 
