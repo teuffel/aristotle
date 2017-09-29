@@ -24,7 +24,7 @@ module Aristotle
     def format_fragment(fragment, part, show_code: true)
       return '' if part != :action && part != :condition
 
-      text = fragment.send(part).to_s
+      text = fragment.send(part).to_s.clone
       text.gsub!(/'([^']+)'/, '<span class="business-rule-fact">\1</span>')
       text.gsub!(/Falls/) {|sym| "<span class='business-rule-condition'>#{sym}</span>" }
 
