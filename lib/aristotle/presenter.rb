@@ -30,7 +30,7 @@ module Aristotle
 
       proc = fragment.send("#{part}_proc")
 
-      return "<span style='color:red'>#{text}</span>" if proc.blank?
+      return "<span class='business-rule-missing'>#{text}</span>" if proc.blank?
       return text unless show_code
 
       code = find_code(*proc.source_location) || 'no code found'
